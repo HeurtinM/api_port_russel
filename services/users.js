@@ -1,42 +1,84 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const User = require('../models/user');
 
-const bcrypt = require('bcrypt');
+//recuperer utilisateur
+exports.getById = async (req, res, next) => {
+    const id = req.params.id;
 
-const User = new Schema({
-    name: {
-        type: String,
-        trim: true,
-        required: [true, 'Le nom est requis']
-    },
-    firstname: {
-        type: String,
-        trim: true
-    },
-    email: {
-        type: String,
-        trim: true,
-        required: [true, 'L\'email est requis'],
-        unique: true,
-        lowercase: true
-    },
-    password: {
-        type: String,
-        trim: true,
-    },
-}, {
+    try {
+        let user = await User.findById(id);
 
-    timestamps: true
-});
+        if (user) {
+            return res.status(200).json(user);
+        }
 
+        return res.status(404).json('user_not_found');
+    } catch (error) {
+        return res.status(501).json(error);
+    }
+};
 
-User.pre('save', function(next) {
-    if (!this.isModified('password')) {
-        return next();
+//ajouter utilisateur
+exports.add = async (req, res, next) => {
+    const emailToCheck = req.body.email;
+
+    //ma tentative de reparer le manque de verification des "user input" comme indiquer dans le cour, j'ai utilisé cette ressource: https://www.w3resource.com/javascript/form/email-validation.php
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailToCheck)) {
+        return res.status(400).json({ error: 'format email invalide' });
     }
 
-    this.password = bcrypt.hashSync(this.password, 10);
-    next();
-});
+    const temp = {
+        name: req.body.name,
+        firstname: req.body.firstname,
+        email: req.body.email,
+        password: req.body.password,
+    };
 
-module.exports = mongoose.model('User', User);
+    try {
+        let user = await User.create(temp);
+        return res.status(201).json(user);
+    } catch (error) {
+        return res.status(501).json(error);
+    }
+};
+
+//modifier utilisiateur
+exports.update = async (req, res, next) => {
+    const id = req.params.id;
+    const temp = {
+        name: req.body.name,
+        firstname: req.body.firstname,
+        email: req.body.email,
+        password: req.body.password
+    };
+
+    try {
+        let user = await User.findOne({ _id: id });
+
+        if (user) {
+            Object.keys(temp).forEach((key) => {
+                if (!!temp[key]) {
+                    user[key] = temp[key];
+                }
+            });
+
+            await user.save();
+            return res.status(201).json(user);
+        }
+
+        return res.status(404).json('user_not_found');
+    } catch (error) {
+        return res.status(501).json(error);
+    }
+};
+
+//supprimer utilisateur
+exports.delete = async (req, res, next) => {
+    const id = req.params.id;
+
+    try {
+        await User.deleteOne({ _id: id });
+        return res.status(204).json('delete_ok');
+    } catch (error) {
+        return res.status(501).json(error);
+    }
+}
