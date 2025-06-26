@@ -1,11 +1,11 @@
 const User = require('../models/user');
 
-//recuperer utilisateur
-exports.getById = async (req, res, next) => {
-    const id = req.params.id;
+//recuperer utilisateur en utilisant l'email au lieu de l'id (comme le cours le fait) afin de correspondre a la route demander par le brief de mission
+exports.getByEmail = async (req, res, next) => {
+    const email = req.params.email;
 
     try {
-        let user = await User.findById(id);
+        let user = await User.findOne({email: email});
 
         if (user) {
             return res.status(200).json(user);
@@ -41,9 +41,9 @@ exports.add = async (req, res, next) => {
     }
 };
 
-//modifier utilisiateur
+//modifier utilisiateur, idem que pour recuperer, j'utilise l'email au lieu de l'id comme demande les routes du brief
 exports.update = async (req, res, next) => {
-    const id = req.params.id;
+    const email = req.params.email;
     const temp = {
         name: req.body.name,
         firstname: req.body.firstname,
@@ -52,7 +52,7 @@ exports.update = async (req, res, next) => {
     };
 
     try {
-        let user = await User.findOne({ _id: id });
+        let user = await User.findOne({ email: email });
 
         if (user) {
             Object.keys(temp).forEach((key) => {
@@ -71,12 +71,12 @@ exports.update = async (req, res, next) => {
     }
 };
 
-//supprimer utilisateur
+//supprimer utilisateur, toujours pareille, email au lieu d'id
 exports.delete = async (req, res, next) => {
-    const id = req.params.id;
+    const email = req.params.email;
 
     try {
-        await User.deleteOne({ _id: id });
+        await User.deleteOne({ email: email });
         return res.status(204).json('delete_ok');
     } catch (error) {
         return res.status(501).json(error);
