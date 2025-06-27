@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const clientOptions = {
-    userNewURLParser : true,
+    //userNewURLParser : true,
     dbName :'apinode'
 };
 

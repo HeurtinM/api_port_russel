@@ -19,6 +19,7 @@ exports.getByEmail = async (req, res, next) => {
 
 //ajouter utilisateur
 exports.add = async (req, res, next) => {
+    console.log("user add");
     const emailToCheck = req.body.email;
 
     //ma tentative de reparer le manque de verification des "user input" comme indiquer dans le cour, j'ai utilisé cette ressource: https://www.w3resource.com/javascript/form/email-validation.php
