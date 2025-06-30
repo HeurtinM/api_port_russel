@@ -1,5 +1,16 @@
 const User = require('../models/user');
 
+//recuperer la liste des utilisateurs
+exports.ListUsers = async(req, res, next) =>{
+    try {
+        let users = await User.find(); //j'ai du louper le passage du cours qui explique comment return tout les elements d'une collection, j'ai utiliser https://www.w3schools.com/mongodb/mongodb_mongosh_find.php pour trouver la fonction
+
+        return res.status(200).json(users);
+    } catch (error) {
+       return res.status(501).json(error);
+    }
+}
+
 //recuperer utilisateur en utilisant l'email au lieu de l'id (comme le cours le fait) afin de correspondre a la route demander par le brief de mission
 exports.getByEmail = async (req, res, next) => {
     const email = req.params.email;
