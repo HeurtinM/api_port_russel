@@ -22,4 +22,4 @@ const Catway = new Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model('Catway', Catway);
