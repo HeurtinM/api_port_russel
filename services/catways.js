@@ -30,7 +30,7 @@ exports.ListCatways = async(req, res, next) =>{
 
 //recupere un catway en particulier via son numéro
 exports.getByNumber = async (req, res, next) => {
-    const id= req.params.catwayNumber;
+    const id= req.params.id;
 
     try {
         let catway = await Catway.findOne({catwayNumber: id});
@@ -39,7 +39,7 @@ exports.getByNumber = async (req, res, next) => {
             return res.status(200).json(catway);
         }
 
-        return res.status(404).json('user_not_found');
+        return res.status(404).json('catway_not_found');
     } catch (error) {
         return res.status(501).json(error);
     }
@@ -47,7 +47,7 @@ exports.getByNumber = async (req, res, next) => {
 
 //modifie un catway
 exports.update = async (req, res, next) => {
-    const id= req.params.catwayNumber;
+    const id= req.params.id;
 
     const temp = {
         catwayState: req.body.catwayState
@@ -67,7 +67,7 @@ exports.update = async (req, res, next) => {
             return res.status(201).json(catway);
         }
 
-        return res.status(404).json('user_not_found');
+        return res.status(404).json('catway_not_found');
     } catch (error) {
         return res.status(501).json(error);
     }
@@ -75,10 +75,10 @@ exports.update = async (req, res, next) => {
 
 //supprime un catway
 exports.delete = async (req, res, next) => {
-    const id= req.params.catwayNumber;
+    const id= req.params.id;
 
     try {
-        await Catway.findOne({catwayNumber: id});
+        await Catway.deleteOne({catwayNumber: id});
         return res.status(204).json('delete_ok');
     } catch (error) {
         return res.status(501).json(error);
