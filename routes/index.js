@@ -3,6 +3,7 @@ var router = express.Router({ mergeParams: true }); //ce parametere et autres in
 
 const userRoute = require('../routes/users');
 const catwayRoute = require('../routes/catways')
+const reservationRoute = require('../routes/reservations')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -11,5 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/users', userRoute);
 router.use('/catways',catwayRoute);
+router.use('/catways/:id',reservationRoute);
+
 
 module.exports = router;

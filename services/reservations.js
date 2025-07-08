@@ -1,8 +1,18 @@
 const Reservation = require('../models/reservation');
+const Catway = require('../models/catway'); //import pour verifier que l'id est celle d'un catway existent
+
 
 //ajout d'une reservatiion
 exports.add = async (req, res, next) =>{
     const id = req.params.id;
+
+    let catway = await Catway.findOne({catwayNumber: id})
+
+    //vérifie que le catways existe 
+    if (!catway) {
+        return res.status(404).json({ error: "ce numéro de catway n'est pas attribué" });
+    }
+
     const temp = {
         catwayNumber: id,
         clientName: req.body.clientName,
@@ -23,3 +33,6 @@ exports.add = async (req, res, next) =>{
             return res.status(501).json(error);
         }
 }
+
+
+
