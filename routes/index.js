@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/users', userRoute);
 router.use('/catways',catwayRoute);
-router.use('/catways/:id',reservationRoute);
+router.use('/catways/:id/reservations',reservationRoute);
 
 
 module.exports = router;
