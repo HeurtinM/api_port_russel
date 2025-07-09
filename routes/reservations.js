@@ -14,7 +14,7 @@ router.get('/', service.ListReservation)
 router.get('/:idReservation',service.getById)
 
 //route pour modifier une reservation
-router.put('/',service.update)
+router.put('/:idReservation',service.update) //je suis un peu confus ici. la route donner par le brief ne donne pas d'ID autre que le catways number mais plusieurs reservations doivent pouvoir utiliser le meme catway. Je me permet donc de modifier la route donner par le brief
 
 //route pour supprimer une reservation
 router.delete('/:idReservation',service.delete)

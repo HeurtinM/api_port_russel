@@ -27,8 +27,24 @@ exports.add = async (req, res, next) =>{
         return res.status(400).json({ error: "La date de début de la réservation doit être avant la date de fin de la réservation." }); 
     }
 
-     try {
-            let reservation = await Reservation.create(temp);
+
+    //verifie si la nouvelle reservation ne chevauche pas une déjà existente    
+    const reservations = await Reservation.find({catwayNumber: id}) //fonction .toArray trouver sur StackOverflow
+
+    for(let i = 0; i < (reservations.length);i++){
+        const existingReservation = reservations[i];
+        
+        if (
+            (temp.startDate >= existingReservation.startDate && temp.startDate <= existingReservation.endDate) ||
+            (temp.endDate >= existingReservation.startDate && temp.endDate <= existingReservation.endDate) ||
+            (temp.startDate <= existingReservation.startDate && temp.endDate >= existingReservation.endDate)
+        ){
+         return res.status(400).json({ error: "cette date est déjà reservée" }); 
+        }
+    }
+
+    try {
+        let reservation = await Reservation.create(temp);
             return res.status(201).json(Reservation);
         } catch (error) {
             return res.status(501).json(error);
@@ -60,7 +76,7 @@ exports.ListReservation = async(req, res, next) =>{
 
 //recuperer une reservation via son id
 exports.getById = async (req, res, next) => {
-    const id= req.params.id;
+    const id= req.params.idReservation;
 
     try {
         let reservation = await Reservation.findById(id); //ici on récupère en utilisant l'ID mongoDB de la réservation car j'imagine qu'il doit ètre possible d'avoir plusieurs réservations pour le meme catways. Si il fallait utiliser le catwayNumber j'ai donner le code qui ferait ça en commentaire dans listReservations
@@ -77,7 +93,7 @@ exports.getById = async (req, res, next) => {
 
 //modifie une reservation
 exports.update = async (req, res, next) => {
-    const id= req.params.id;
+    const id= req.params.idReservation;
 
     const temp = {
         clientName: req.body.clientName,
@@ -87,7 +103,7 @@ exports.update = async (req, res, next) => {
     };
 
     try {
-        let reservation = await Reservation.findOne({catwayNumber: id}); //je suis un peu confus ici. je pense qu'il devrait etre possible d'avoir plusieurs reservation pour le meme catway. Mais la route donner par le brief pour modifié n'a pas d'autre identifiant que celui du catway. je vais donc crée cette fonction comme si un catways ne pouvait avoir qu'une seul reservation afin de ne pas modifier la route donner par le brief, meme si cela ne suis pas la logique que j'ai suivie jusqu'ici
+        let reservation = await Reservation.findById(id); //je suis un peu confus ici. la route donner par le brief ne donne pas d'ID autre que le catways number mais plusieurs reservations doivent pouvoir
 
         if (reservation) {
             Object.keys(temp).forEach((key) => {
@@ -107,7 +123,7 @@ exports.update = async (req, res, next) => {
 };
 
 exports.delete = async (req, res, next) => {
-    const id= req.params.id;
+    const id= req.params.idReservation;
 
     try {
         await Reservation.findByIdAndDelete(id); //pareille que pour en recuperer une j'utilise l'id mongoDB
