@@ -21,6 +21,7 @@ const User = new Schema({
 
         required: [true, 'Le mot de passe est requis'],
         maxLength: 30,
+        minLength: 10,
         //verifie que le mdp ne contient pas d'espace. validate et validator trouver dans la doc mongoose https://mongoosejs.com/docs/validation.html et "/\s/g" sur stack overflow
         validate:{
             validator: function hasWhiteSpace(s) {
