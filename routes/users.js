@@ -6,7 +6,7 @@ const service = require('../services/users');
 //route pour lire infos utilisateur
 router.get('/:email',service.getByEmail)
 
-//route pour lister l'ensembles des utilisateurs, pas dans le cours donc vide pour le moment
+//route pour lister l'ensembles des utilisateurs
 router.get('/',service.ListUsers)
 
 //route pour ajouter un utilisateur
