@@ -18,5 +18,8 @@ router.put('/:email',service.update)
 //route pour supprimer un utilisateur
 router.delete('/:email',service.delete)
 
+//route pour connecter un utilisateur
+router.post('/login',service.login)
+
 
 module.exports = router;

@@ -10,13 +10,13 @@
   <p>Bienvenue dans l'API du port russel ! <br> 
      une fois connecté vous pourrez accedez au tableau de bord qui vous offrira la capacité de gerer les utilisateurs, catways et reservations 
   </p>
-  <form action="">
+  <form action="/users/login" method="post">
       <label for="userName">nom d'utilisateur:</label><br>
-      <input type="text" id="userName" name="userName"><br>
+      <input type="text" id="userName" name="userName" required><br>
       <label for="email">email:</label><br>
-      <input type="text" id="email" name="email"><br>
+      <input type="email" id="email" name="email" required><br>
       <label for="password">mot de passe:</label><br>
-      <input type="text" id="password" name="password"><br>
+      <input type="password" id="password" name="password" required ><br>
       <input type="submit" value="se connecter">
   </form>
 </body>
