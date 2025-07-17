@@ -6,8 +6,26 @@
 </head>
 
 <body>
-  <h1>vous etes conncter !</h1>
+  <h1>Bienvenue sur le tableau de bord</h1>
+  <section>
+    <a class="switchPage" href="catways.html">accéder au menu catways</a>
+    <a class="switchPage" href="reservations.html">accéder au menu reservations</a>
+    <a class="switchPage" href="users.html">accéder au menu utilisateurs</a>
+    <a class="switchPage" href="#">accéder a la documentation de l'API</a>
+    <a class="switchPage" href="index.html">se deconnecter</a>
+  </section>
+    <p>actuellement connecté: <span id="userInfo"></span> </p>
 
+  <script>
+    const json = localStorage.getItem('form');
+    console.log('Données récupérées du localStorage :', json)
+
+    if (json) {
+      const object = JSON.parse(json);
+      const userInfoSpan = document.getElementById('userInfo');
+      userInfoSpan.textContent = `${object.userName} - ${object.email}`;
+    }
+  </script>
 </body>
 
 </html>
