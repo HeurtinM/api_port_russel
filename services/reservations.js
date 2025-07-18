@@ -103,7 +103,7 @@ exports.update = async (req, res, next) => {
     };
 
     try {
-        let reservation = await Reservation.findById(id); //je suis un peu confus ici. la route donner par le brief ne donne pas d'ID autre que le catways number mais plusieurs reservations doivent pouvoir
+        let reservation = await Reservation.findById(id);
 
         if (reservation) {
             Object.keys(temp).forEach((key) => {
