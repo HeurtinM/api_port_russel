@@ -39,7 +39,7 @@ exports.getByNumber = async (req, res, next) => {
             return res.status(200).json(catway);
         }
 
-        return res.status(404).json('catway_not_found');
+        return res.status(404).json('ce numéro de catway n\'est pas attribué');
     } catch (error) {
         return res.status(501).json(error);
     }
