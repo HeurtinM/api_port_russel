@@ -7,15 +7,29 @@
 
 <body>
 <h1>catways</h1>
-
-<form id="catwayForm">
+<section class="catwayByNumber">
+  <form id="catwayForm">
   <label for="catwayID">numéro du catway que vous souhaitez consulter</label>
   <input type="number" id="catwayID" name="catwayID">
   <input type="submit" value="acceder au catway">
 </form>
-
 <div id="catwayDisplay"></div>
-
+</section>
+<section class="catwayList">
+<button id="listCatways">afficher la liste de tout les catways</button>
+ <table id="catwaysTable">
+     <thead>
+            <tr>
+                <th>numéro de catways</th>
+                <th>type du catway</th>
+                <th>état du catway</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données seront insérées ici dynamiquement -->
+        </tbody>
+  </table>
+</section>
 <script src="/javascripts/catwaysCRUD.js"></script>
 </body>
 
