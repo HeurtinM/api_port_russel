@@ -8,14 +8,16 @@
 <body>
 <h1>catways</h1>
 <section class="catwayByNumber">
+  <h2>afficher un catway</h2>
   <form id="catwayForm">
   <label for="catwayID">numéro du catway que vous souhaitez consulter</label>
-  <input type="number" id="catwayID" name="catwayID">
+  <input type="number" id="catwayID" name="catwayID"><br>
   <input type="submit" value="acceder au catway">
 </form>
 <div id="catwayDisplay"></div>
 </section>
 <section class="catwayList">
+  <h2>afficher la liste de tout les catways</h2>
 <button id="listCatways">afficher la liste de tout les catways</button>
  <table id="catwaysTable">
      <thead>
@@ -26,9 +28,23 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Les données seront insérées ici dynamiquement -->
         </tbody>
   </table>
+</section>
+<section id="catwayAdd">
+  <h2>ajouter un catway</h2>
+  <form action="http://localhost:3000/catways/" method="post">
+    <label for="catwayToAddID">numéro du catway à ajouter</label>
+    <input type="number" id="catwayToAddID" name="catwayNumber"><br>
+    <p>type du catway à ajouter</label>
+    <input type="radio" id="short" name="catwayType" value="short">
+    <label for="short">short</label>
+    <input type="radio" id="long" name="catwayTType" value="long">
+    <label for="long">long</label><br>
+    <label for="catwayToAddState">état du catway à ajouter</label><br>
+    <textarea id="catwayToAddState" name="catwayState" rows="4" cols="50"></textarea><br>
+    <input type="submit" value="enregistrer le catway">
+  </form>
 </section>
 <script src="/javascripts/catwaysCRUD.js"></script>
 </body>

@@ -30,22 +30,23 @@ document.getElementById('listCatways').addEventListener('click', async function(
     await listCatways();
 });
 
-async function listCatways() {
-                try {
-                let result = await fetch('http://localhost:3000/catways/');
-                let catways = await result.json();
-                let tableBody = document.querySelector('#catwaysTable tbody');
 
-                //simple fonction pour mettre les catways dans l'ordre
-                function compare( a, b ) {
-                if ( a.catwayNumber < b.catwayNumber ){
-                    return -1;
-                }
-                if ( a.catwayNumber > b.catwayNumber ){
-                    return 1;
-                }
-                return 0;
-                }
+ //simple fonction pour mettre les catways dans l'ordre
+function compare( a, b ) {
+    if ( a.catwayNumber < b.catwayNumber ){
+        return -1;
+    }
+    if ( a.catwayNumber > b.catwayNumber ){
+        return 1;
+    }
+        return 0;
+}
+
+async function listCatways() {
+    try {
+        let result = await fetch('http://localhost:3000/catways/');
+            let catways = await result.json();
+                let tableBody = document.querySelector('#catwaysTable tbody');
 
                 catways.sort( compare );
 
@@ -69,7 +70,7 @@ async function listCatways() {
 
                     tableBody.appendChild(row);
                 };
-            } catch (error) {
-                console.error(error);
-            }
+    } catch (error) {
+        console.error(error);
+    }
 }
