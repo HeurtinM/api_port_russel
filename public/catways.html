@@ -11,7 +11,7 @@
   <h2>afficher un catway</h2>
   <form id="catwayForm">
   <label for="catwayID">numéro du catway que vous souhaitez consulter</label>
-  <input type="number" id="catwayID" name="catwayID"><br>
+  <input type="number" id="catwayID" name="catwayID" required><br>
   <input type="submit" value="acceder au catway">
 </form>
 <div id="catwayDisplay"></div>
@@ -35,16 +35,40 @@
   <h2>ajouter un catway</h2>
   <form action="http://localhost:3000/catways/" method="post">
     <label for="catwayToAddID">numéro du catway à ajouter</label>
-    <input type="number" id="catwayToAddID" name="catwayNumber"><br>
+    <input type="number" id="catwayToAddID" name="catwayNumber" required><br>
     <p>type du catway à ajouter</label>
-    <input type="radio" id="short" name="catwayType" value="short">
+    <input type="radio" id="short" name="catwayType" value="short" required>
     <label for="short">short</label>
-    <input type="radio" id="long" name="catwayTType" value="long">
+    <input type="radio" id="long" name="catwayType" value="long" required>
     <label for="long">long</label><br>
     <label for="catwayToAddState">état du catway à ajouter</label><br>
     <textarea id="catwayToAddState" name="catwayState" rows="4" cols="50"></textarea><br>
     <input type="submit" value="enregistrer le catway">
   </form>
+</section>
+<section id="catwayUpdate">
+  <h2>modifier un catway</h2>
+  <form id="updateCatwayForm">
+    <label for="catwayToUpdateID">numéro du catway à modifier</label>
+    <input type="number" id="catwayToUpdateID" name="catwayNumber" required><br>
+    <p>type du catway</label>
+    <input type="radio" id="short" name="catwayUpdatedType" value="short" required>
+    <label for="short">short</label>
+    <input type="radio" id="long" name="catwayUpdatedType" value="long" required>
+    <label for="long">long</label><br>
+    <label for="catwayToUpdateState">état du catway</label><br>
+    <textarea id="catwayToUpdateState" name="catwayState" rows="4" cols="50"></textarea><br>
+    <input type="submit" value="modifier le catway">
+  </form>
+</section>
+<section id="catwayDelete">
+  <h2>supprimer un catway</h2>
+<form id="deleteCatwayForm">
+<label for="catwayToDelete">choisissez un catway a supprimer</label>
+<select name="catwayToDelete" id="catwayToDelete">
+</select>
+<input type="submit" value="supprimer le catway">
+</form>
 </section>
 <script src="/javascripts/catwaysCRUD.js"></script>
 </body>
