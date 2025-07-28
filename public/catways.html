@@ -6,12 +6,13 @@
 </head>
 
 <body>
+  <a href="dashboard.html">retourner au tableau de bord</a>
 <h1>catways</h1>
 <section class="catwayByNumber">
   <h2>afficher un catway</h2>
   <form id="catwayForm">
-  <label for="catwayID">numéro du catway que vous souhaitez consulter</label>
-  <input type="number" id="catwayID" name="catwayID" required><br>
+  <label for="catwayToConsult">numéro du catway que vous souhaitez consulter</label>
+  <select name="catwayToConsult" id="catwayToConsult">
   <input type="submit" value="acceder au catway">
 </form>
 <div id="catwayDisplay"></div>
@@ -49,8 +50,9 @@
 <section id="catwayUpdate">
   <h2>modifier un catway</h2>
   <form id="updateCatwayForm">
-    <label for="catwayToUpdateID">numéro du catway à modifier</label>
-    <input type="number" id="catwayToUpdateID" name="catwayNumber" required><br>
+    <label for="catwayToUpdate">numéro du catway à modifier</label>
+    <select name="catwayToUpdate" id="catwayToUpdate">
+    </select>
     <p>type du catway</label>
     <input type="radio" id="short" name="catwayUpdatedType" value="short" required>
     <label for="short">short</label>
@@ -62,7 +64,7 @@
   </form>
 </section>
 <section id="catwayDelete">
-  <h2>supprimer un catway</h2>
+<h2>supprimer un catway</h2>
 <form id="deleteCatwayForm">
 <label for="catwayToDelete">choisissez un catway a supprimer</label>
 <select name="catwayToDelete" id="catwayToDelete">

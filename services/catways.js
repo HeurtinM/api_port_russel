@@ -50,6 +50,7 @@ exports.update = async (req, res, next) => {
     const id= req.params.id;
 
     const temp = {
+        catwayType: req.body.catwayType,
         catwayState: req.body.catwayState
     };
 
