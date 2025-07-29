@@ -11,7 +11,7 @@
 <section class="userByMail">
   <h2>afficher un utilisateur</h2>
   <form id="userForm">
-  <label for="userToConsult">nom de l'utilisateur que vous souhaitez afficher</label>
+  <label for="userToConsult">email de l'utilisateur que vous souhaitez afficher</label>
   <select name="userToConsult" id="userToConsult">
   <input type="submit" value="afficher l'utilisateur">
 </form>
@@ -24,53 +24,53 @@
      <thead>
             <tr>
                 <th>nom d'utilisateur</th>
+                <th>email de l'utilisateur</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
   </table>
 </section>
-<section id="catwayAdd">
-  <h2>ajouter un catway</h2>
-  <form action="http://localhost:3000/catways/" method="post">
-    <label for="catwayToAddID">numéro du catway à ajouter</label>
-    <input type="number" id="catwayToAddID" name="catwayNumber" required><br>
-    <p>type du catway à ajouter</label>
-    <input type="radio" id="short" name="catwayType" value="short" required>
-    <label for="short">short</label>
-    <input type="radio" id="long" name="catwayType" value="long" required>
-    <label for="long">long</label><br>
-    <label for="catwayToAddState">état du catway à ajouter</label><br>
-    <textarea id="catwayToAddState" name="catwayState" rows="4" cols="50"></textarea><br>
-    <input type="submit" value="enregistrer le catway">
+<section id="userAdd">
+  <h2>ajouter un utilisateur</h2>
+  <form action="http://localhost:3000/users/" method="post">
+    <label for="userNameToAdd">nom d'utilisateur</label>
+    <input type="string" id="userNameToAdd" name="userName" required><br>
+    <label for="userEmailToAdd">email</label>
+    <input type="email" id="userEmailToAdd" name="email" required><br>
+    <label for="passwordToAdd">mot de passe</label>
+    <input type="password" id="passwordToAdd" name="password" required><br>
+    <input type="checkbox" onclick="togglePasswordVisibility('passwordToAdd')">afficher le mot de passe<br>
+    <input type="submit" value="enregistrer l'utilisateur">
   </form>
 </section>
-<section id="catwayUpdate">
-  <h2>modifier un catway</h2>
-  <form id="updateCatwayForm">
-    <label for="catwayToUpdate">numéro du catway à modifier</label>
-    <select name="catwayToUpdate" id="catwayToUpdate">
-    </select>
-    <p>type du catway</label>
-    <input type="radio" id="short" name="catwayUpdatedType" value="short" required>
-    <label for="short">short</label>
-    <input type="radio" id="long" name="catwayUpdatedType" value="long" required>
-    <label for="long">long</label><br>
-    <label for="catwayToUpdateState">état du catway</label><br>
-    <textarea id="catwayToUpdateState" name="catwayState" rows="4" cols="50"></textarea><br>
-    <input type="submit" value="modifier le catway">
+<section id="userUpdate">
+  <h2>modifier les données d'un utilisateur</h2>
+  <form id="updateUserForm">
+    <label for="userToUpdate">email l'utilisateur que vous souhaitez modifier</label>
+    <select name="userToUpdate" id="userToUpdate">
+    </select><br>
+    <label for="userNameToUpdate">nouveau nom d'utilisateur</label>
+    <input type="string" id="userNameToUpdate" name="userName" required><br>
+    <label for="userEmailToUpdate">nouvelle email</label>
+    <input type="email" id="userEmailToUpdate" name="email" required><br>
+    <label for="passwordToUpdate">nouveau mot de passe</label>
+    <input type="password" id="passwordToUpdate" name="password" required><br>
+    <input type="checkbox" onclick="togglePasswordVisibility('passwordToUpdate')">afficher le mot de passe<br>
+    <input type="submit" value="modifier l'utilisateur">
   </form>
 </section>
-<section id="catwayDelete">
-<h2>supprimer un catway</h2>
-<form id="deleteCatwayForm">
-<label for="catwayToDelete">choisissez un catway a supprimer</label>
-<select name="catwayToDelete" id="catwayToDelete">
+<section id="userDelete">
+<h2>supprimer un utilisateur</h2>
+<form id="deleteUserForm">
+<label for="userToDelete">choisissez un utilisateur à supprimer</label>
+<select name="userToDelete" id="userToDelete">
 </select>
-<input type="submit" value="supprimer le catway">
+<input type="submit" value="supprimer l'utilisateur">
 </form>
 </section>
 <script src="/javascripts/usersCRUD.js"></script>
+<script src="/javascripts/togglePassword.js"></script>
 </body>
 
 </html>

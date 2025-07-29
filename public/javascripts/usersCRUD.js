@@ -1,3 +1,4 @@
+//ajoute un eventlistener au bouton afficher un utilisateur et recupère l'ID donner par l'utilisateur pour la fonction
 document.getElementById('userForm').addEventListener('submit', async function(event) {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
@@ -6,6 +7,8 @@ document.getElementById('userForm').addEventListener('submit', async function(ev
     await getUser(email);
 });
 
+//affiche un utilisateur via l'email, la seul information afficher est son nom 
+// donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
 async function getUser(email) {
     let result = await fetch("http://localhost:3000/users/" + email);
     let userJson = await result.json();
@@ -28,11 +31,12 @@ function compare( a, b ) {
     }
         return 0;
 }
-
+//ajoute un eventListener au bouton liste utilisateur
 document.getElementById('listUsers').addEventListener('click', async function() { 
     await listUsers();
 });
 
+//liste tout les utilisateur,affiche leur nom d'utilisateur et email
 async function listUsers() {
     try {
         let result = await fetch('http://localhost:3000/users/');
@@ -51,6 +55,10 @@ async function listUsers() {
                     userNameCell.textContent = user.userName;
                     row.appendChild(userNameCell);
 
+                    let userEmailCell = document.createElement('td');
+                    userEmailCell.textContent = user.email;
+                    row.appendChild(userEmailCell);
+
                     tableBody.appendChild(row);
                 };
     } catch (error) {
@@ -58,22 +66,79 @@ async function listUsers() {
     }
 }
 
+//update un utilisteur avec les infos du form
+document.getElementById('updateUserForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
+    let userToUpdateEmail = document.getElementById('userToUpdate').value;
 
+    const userName = document.getElementById('userNameToUpdate').value;
+    const email = document.getElementById('userEmailToUpdate').value;
+    const password = document.getElementById('passwordToUpdate').value;
+
+    try {
+        const response = await fetch(`http://localhost:3000/users/${userToUpdateEmail}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userName, email, password}),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert('utilisateur modifier avec succès !');
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    listUsersForDropDown()
+});
+
+//supprime l'utilisateur choisi
+document.getElementById('deleteUserForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const dropdown = document.getElementById('userToDelete');
+    const userEmail = dropdown.value;
+
+    try {
+        const response = await fetch(`http://localhost:3000/users/${userEmail}`, {
+            method: 'DELETE',
+        });
+
+        if (response.ok) {
+            alert('l\'utilisateur a été supprimer');
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error}`);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    listUsersForDropDown(); //actualise le dropdown
+});
+
+//fonction pour peupler les dropdowns
 async function listUsersForDropDown() {
     try {
         console.log('started');
         let result = await fetch('http://localhost:3000/users/');
         let users = await result.json();
         let dropdownConsult = document.getElementById('userToConsult');
-        //let dropdownDelete = document.getElementById('userToDelete');
-        //let dropdownUpdate = document.getElementById('userToUpdate');
+        let dropdownDelete = document.getElementById('userToDelete');
+        let dropdownUpdate = document.getElementById('userToUpdate');
 
         users.sort( compare );
 
         dropdownConsult.innerHTML = '';
-        //dropdownDelete.innerHTML = '';
-        //dropdownUpdate.innerHTML = '';
+        dropdownDelete.innerHTML = '';
+        dropdownUpdate.innerHTML = '';
 
         for(let i=0; i< users.length; i++){
             let user = users[i];
@@ -83,8 +148,8 @@ async function listUsersForDropDown() {
             dropdownOption.innerHTML = user.email;
 
             dropdownConsult.appendChild(dropdownOption.cloneNode(true)); //cloneNode ajouté pour que les deux menu puissent ètre peupler en utilisant qu'une seul boucle
-            //dropdownDelete.appendChild(dropdownOption.cloneNode(true)); 
-            //dropdownUpdate.appendChild(dropdownOption);
+            dropdownDelete.appendChild(dropdownOption.cloneNode(true)); 
+            dropdownUpdate.appendChild(dropdownOption);
         };
     } catch (error) {
         console.error(error);
@@ -92,3 +157,8 @@ async function listUsersForDropDown() {
 }
 
 listUsersForDropDown()
+
+//todo
+//rajouter mdp pour suppr user
+//combiner les event listeners et fonctions
+//crud reservations
