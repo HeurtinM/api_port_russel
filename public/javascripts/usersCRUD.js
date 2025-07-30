@@ -1,15 +1,10 @@
-//ajoute un eventlistener au bouton afficher un utilisateur et recupère l'ID donner par l'utilisateur pour la fonction
-document.getElementById('userForm').addEventListener('submit', async function(event) {
+//affiche un utilisateur via l'email, la seul information afficher est son nom 
+// donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
+document.getElementById('userForm').addEventListener('submit', async (event) => {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
     let email = document.getElementById('userToConsult').value;
 
-    await getUser(email);
-});
-
-//affiche un utilisateur via l'email, la seul information afficher est son nom 
-// donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
-async function getUser(email) {
     let result = await fetch("http://localhost:3000/users/" + email);
     let userJson = await result.json();
     let userDisplay = document.getElementById("userDisplay");
@@ -19,7 +14,7 @@ async function getUser(email) {
     let userName = document.createElement('p');
     userName.textContent = userJson.userName;
     userDisplay.appendChild(userName);
-}
+});
 
 //simple fonction pour mettre les utilisateurs dans l'ordre alphabetique de leur email
 function compare( a, b ) {
@@ -31,13 +26,9 @@ function compare( a, b ) {
     }
         return 0;
 }
-//ajoute un eventListener au bouton liste utilisateur
-document.getElementById('listUsers').addEventListener('click', async function() { 
-    await listUsers();
-});
 
 //liste tout les utilisateur,affiche leur nom d'utilisateur et email
-async function listUsers() {
+document.getElementById('listUsers').addEventListener('click', async () => { 
     try {
         let result = await fetch('http://localhost:3000/users/');
         let users = await result.json();
@@ -64,7 +55,7 @@ async function listUsers() {
     } catch (error) {
         console.error(error);
     }
-}
+});
 
 //update un utilisteur avec les infos du form
 document.getElementById('updateUserForm').addEventListener('submit', async (event) => {
@@ -159,6 +150,5 @@ async function listUsersForDropDown() {
 listUsersForDropDown()
 
 //todo
-//rajouter mdp pour suppr user
 //combiner les event listeners et fonctions
 //crud reservations

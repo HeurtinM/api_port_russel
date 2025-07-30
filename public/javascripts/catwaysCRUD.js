@@ -1,14 +1,9 @@
-//ajoute un eventlistener au bouton afficher un catway et recupère l'ID donner par l'utilisateur pour la fonction
-document.getElementById('catwayForm').addEventListener('submit', async function(event) {
+//récupère un catway via son ID et affiche son type et son état
+document.getElementById('catwayForm').addEventListener('submit', async (event)=> {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
     let catwayID = document.getElementById('catwayToConsult').value;
 
-    await getCatway(catwayID);
-});
-
-//récupère un catway via son ID et affiche son type et son état
-async function getCatway(catwayID) {
     let result = await fetch("http://localhost:3000/catways/" + catwayID);
     let catwayJson = await result.json();
     let catwayDisplay = document.getElementById("catwayDisplay");
@@ -22,14 +17,7 @@ async function getCatway(catwayID) {
     let catwayState = document.createElement('p');
     catwayState.textContent = catwayJson.catwayState;
     catwayDisplay.appendChild(catwayState);
-}
-
-
-//ajout un event istener au bouton de list catways
-document.getElementById('listCatways').addEventListener('click', async function() { 
-    await listCatways();
 });
-
 
 //simple fonction pour mettre les catways dans l'ordre
 function compare( a, b ) {
@@ -43,8 +31,8 @@ function compare( a, b ) {
 }
 
 //affiche la liste de tout les catway dans un tableau avec leur ID,type et état
-async function listCatways() {
-    try {
+document.getElementById('listCatways').addEventListener('click', async ()=> { 
+     try {
         let result = await fetch('http://localhost:3000/catways/');
             let catways = await result.json();
                 let tableBody = document.querySelector('#catwaysTable tbody');
@@ -74,9 +62,7 @@ async function listCatways() {
     } catch (error) {
         console.error(error);
     }
-}
-
-
+});
 
 //j'ai eu enormément de mal a trouver comment utilisez les methodes delete et put en passant par le HTML
 // quasiment tout les forums ou autre dans lesquel j'ai fait mes recherches disait juste que PUT et DELETE ne sont pas integrer en HTML sans donner de ressources pour countourner ce problème

@@ -4,10 +4,10 @@ var router = express.Router({ mergeParams: true });
 const service = require('../services/reservations');
 
 
-//route pour ajouter un catway
+//route pour ajouter une reservation
 router.post('/',service.add)
 
-//route pour list toutes les 
+//route pour list toutes les reservations
 router.get('/', service.ListReservation)
 
 //route pour récuperer une reservations via son ID

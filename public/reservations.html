@@ -6,7 +6,82 @@
 </head>
 
 <body>
-<h1>reservations</h1>
+  <a href="dashboard.html">retourner au tableau de bord</a>
+<h1>Réservations</h1>
+<section class="reservationByID">
+  <h2>afficher une réservation</h2>
+  <form id="reservationForm">
+  <label for="reservationToConsultCatway">numéro du catway la reservation que vous souhaitez consulter</label>
+  <select name="reservationToConsultCatway" id="reservationToConsultCatway"></select><br>
+  <label for="reservationToConsult">ID de la reservation que vous souhaitez consulter</label>
+  <select name="reservationToConsult" id="reservationToConsult"></select><br>
+  <input type="submit" value="afficher la reservation">
+</form>
+<div id="reservationDisplay"></div>
+</section>
+<section class="reservationList">
+<h2>afficher la liste de toute les reservations</h2>
+<button id="listReservations">afficher la liste des reservations</button>
+ <table id="reservationsTable">
+     <thead>
+            <tr>
+                <th>ID de la reservation</th> <!--affiche l'id de la reservation en plus des elements du model pour faciliter l'utilisation des autres options-->
+                <th>numéro du catway</th>
+                <th>nom du client</th>
+                <th>nom du bateau</th>
+                <th>date de début</th>
+                <th>date de fin</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+  </table>
+</section>
+<section id="reservationAdd">
+  <h2>ajouter une reservation</h2>
+  <form id="addReservationForm" action="" method="post">
+    <label for="catwayNumberForReservation">numéro du catway pour la reservation</label>
+    <select name="catwayNumberForReservation" id="catwayNumberForReservation"></select> <br>
+    <label for="clientNameToAdd">nom du client</label>
+    <input type="string" id="clientNameToAdd" name="clientName" required><br>
+    <label for="boatNameToAdd">nom du bateau</label>
+    <input type="string" id="boatNameToAdd" name="boatName" required><br>
+    <label for="startDateToAdd">date de début</label>
+    <input type="date" id="startDateToAdd" name="startDate" required><br>
+    <label for="endDateToAdd">date de fin</label>
+    <input type="date" id="endDateToAdd" name="endDate" required><br>
+    <input type="submit" value="enregistrer la reservation">
+  </form>
+</section>
+<section id="reservationUpdate">
+  <h2>modifier les données d'une reservation</h2>
+  <form id="updateReservationForm">
+    <label for="reservationToUpdateCatway">numéro du catway de la reservation que vous souhaitez modifier</label>
+    <select name="reservationToUpdateCatway" id="reservationToUpdateCatway"></select><br>
+    <label for="reservationToUpdate">ID de la reservation que vous souhaitez modifier</label>
+    <select name="reservationToUpdate" id="reservationToUpdate"></select><br>
+    <label for="clientNameToUpdate">nom du client</label>
+    <input type="string" id="clientNameToUpdate" name="clientName" required><br>
+    <label for="boatNameToUpdate">nom du bateau</label>
+    <input type="string" id="boatNameToUpdate" name="boatName" required><br>
+    <label for="startDateToUpdate">date de début</label>
+    <input type="date" id="startDateToUpdate" name="startDate" required><br>
+    <label for="endDateToUpdate">date de fin</label>
+    <input type="date" id="endDateToUpdate" name="endDate" required><br>
+    <input type="submit" value="modifier la reservation">
+  </form>
+</section>
+<section id="reservationDelete">
+<h2>supprimer une reservation</h2>
+<form id="deleteReservationForm">
+<label for="reservationToDeleteCatway">numéro du catway de la reservation à supprimer</label>
+<select name="reservationToDeleteCatway" id="reservationToDeleteCatway"></select><br>
+<label for="reservationToDelete">choisissez une reservation à supprimer</label>
+<select name="reservationToDelete" id="reservationToDelete"></select>
+<input type="submit" value="supprimer la reservation">
+</form>
+</section>
+<script src="/javascripts/reservationsCRUD.js"></script>
 </body>
 
 </html>
