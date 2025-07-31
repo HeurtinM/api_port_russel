@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //recuperer la liste des utilisateurs
 exports.ListUsers = async(req, res, next) =>{
@@ -94,19 +95,42 @@ exports.delete = async (req, res, next) => {
     }
 }
 
-//fonction pour se connecter, crée via des recherches sur different forums, sites d'info et utilisation de "le chat Mistral"
+
 exports.login = async (req, res, next) => {
-    const {userName, email, password} = req.body;
+    const {email, password} = req.body;
 
     try{
-        let user = await User.findOne({email: email});
+        let user = await User.findOne({email: email}, '-__v -createdAt -updatedAt');
 
-        if(user && bcrypt.compareSync(password, user.password)){
-            //fonction response redirect prise ici: https://expressjs.com/en/api.html#res.redirect
-            res.redirect("/dashboard.html");
+        if(user){
+            bcrypt.compare(password, user.password, function(err, response){
+                if(err){
+                    throw new Error(err);
+                }
+                if(response){
+                    delete user._doc.password;
+
+                    const expireIn = 24 * 60 *60;
+                    const token = jwt.sign({
+                        user: user
+                    }, 
+                    process.env.SECRET_KEY,
+                    {
+                        expiresIn: expireIn
+                    });
+
+                res.header('Authorization','Bearer'+token);
+                
+
+                return res.redirect("/dashboard.html"); //fonction response redirect prise ici: https://expressjs.com/en/api.html#res.redirect
+                }
+
+                return res.status(403).json({ success: false, message: "Email ou mot de passe incorrect" });
+            })
+            
         }
         else{
-            res.status(401).json({ success: false, message: "Email ou mot de passe incorrect" });
+           return res.status(404).json('utilisateur inconnue')
         }     
     } catch (error) {
         return res.status(501).json(error);

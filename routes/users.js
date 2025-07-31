@@ -3,23 +3,25 @@ var router = express.Router();
 
 const service = require('../services/users');
 
+const private = require('../middlewares/private');
+
 //route pour lire infos utilisateur
-router.get('/:email',service.getByEmail)
+router.get('/:email',private.checkJWT, service.getByEmail)
 
 //route pour lister l'ensembles des utilisateurs
-router.get('/',service.ListUsers)
+router.get('/',private.checkJWT, service.ListUsers)
 
 //route pour ajouter un utilisateur
 router.post('/',service.add)
 
 //route pour modifier un utilisateur
-router.put('/:email',service.update)
+router.put('/:email',private.checkJWT, service.update)
 
 //route pour supprimer un utilisateur
-router.delete('/:email',service.delete)
+router.delete('/:email',private.checkJWT, service.delete)
 
 //route pour connecter un utilisateur
-router.post('/login',service.login)
+router.post('/login', service.login)
 
 
 module.exports = router;
