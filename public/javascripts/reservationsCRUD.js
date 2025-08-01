@@ -1,4 +1,12 @@
-//affiche une reservation via l'ID. J'utilise l'ID au lieu d'un element plus simple comme le boatName pour rester fidele aux routes données par le brief
+//
+/**
+ * affiche une reservation via l'ID. J'utilise l'ID au lieu d'un element plus simple comme le boatName pour rester fidele aux routes données par le brief
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('reservationForm').addEventListener('submit', async (event) => {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
@@ -16,7 +24,15 @@ document.getElementById('reservationForm').addEventListener('submit', async (eve
     reservationDisplay.appendChild(reservationName);
 });
 
-//liste tout les utilisateur,affiche leur nom d'utilisateur et email
+//
+/**
+ * liste tout les utilisateur,affiche leur nom d'utilisateur et email
+ * 
+ * @param {Event} event click du bouton "affiche liste"
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('listReservations').addEventListener('click', async () => { 
     try {
         let catwaysResult = await fetch('http://localhost:3000/catways/');
@@ -49,11 +65,11 @@ document.getElementById('listReservations').addEventListener('click', async () =
             row.appendChild(reservationBoatNameCell);
 
             let reservationStartDateCell = document.createElement('td');
-            reservationStartDateCell.textContent = new Date(reservation.startDate).toISOString().split('T')[0]; //pour n'afficher que l'année, mois et jour, sans les heures
+            reservationStartDateCell.textContent = new Date(reservation.startDate).toLocaleString();
             row.appendChild(reservationStartDateCell);
 
             let reservationEndDateCell = document.createElement('td');
-            reservationEndDateCell.textContent = new Date(reservation.endDate).toISOString().split('T')[0];;
+            reservationEndDateCell.textContent = new Date(reservation.endDate).toLocaleString();
             row.appendChild(reservationEndDateCell);
 
             tableBody.appendChild(row);
@@ -63,7 +79,15 @@ document.getElementById('listReservations').addEventListener('click', async () =
     }
 });
 
-//donne la route pour ajouter la reservation avec le numéro du catway choisis
+//
+/**
+ * donne la route pour ajouter la reservation avec le numéro du catway choisis
+ * 
+ * @param {Event} event la selection du catway number dans le menu déroulant
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('catwayNumberForReservation').addEventListener('change', function() {
         let catwayID = this.value;
         document.getElementById('addReservationForm').action = `http://localhost:3000/catways/${catwayID}/reservations/`;
@@ -71,6 +95,14 @@ document.getElementById('catwayNumberForReservation').addEventListener('change',
 
 
 //update une reservation avec les infos du form
+/**
+ * liste tout les utilisateur,affiche leur nom d'utilisateur et email
+ * 
+ * @param {Event} event click du bouton "affiche liste"
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('updateReservationForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -104,6 +136,14 @@ document.getElementById('updateReservationForm').addEventListener('submit', asyn
 });
 
 //supprime la reservation choisi
+/**
+ * supprime la reservation choisi
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('deleteReservationForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -140,9 +180,15 @@ function compare( a, b ) {
 }
 
 //fonction pour peupler les dropdowns des num catways
+/** 
+ * Remplit les menus déroulants avec la liste des catways existants.
+ * Les catways sont triés par numéro dans l'ordre croissant.
+ *
+ * @async
+ * @returns void, ne return rien dans le code
+  */
 async function listCatwaysForDropDown() {
     try {
-        console.log('started');
         let result = await fetch('http://localhost:3000/catways/');
         let catways = await result.json();
         let dropdownAdd = document.getElementById('catwayNumberForReservation');
@@ -197,9 +243,14 @@ document.getElementById("reservationToUpdateCatway").addEventListener('change', 
 
 
 //fonction pour remplir les dropdowns des reservations en fonction du catway selectionné
+/** 
+ * Remplit les menus déroulants avec la liste des reservations du catway selectionné.
+ *
+ * @async
+ * @returns void, ne return rien dans le code
+  */
 async function listIDForDropDown(catwayID, dropdownID) {
     try {
-        console.log('started');
         let result = await fetch(`http://localhost:3000/catways/${catwayID}/reservations/`);
         let reservations = await result.json();
         let dropdown = document.getElementById(dropdownID);

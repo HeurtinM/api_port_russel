@@ -5,7 +5,9 @@ const userRoute = require('../routes/users');
 const catwayRoute = require('../routes/catways')
 const reservationRoute = require('../routes/reservations')
 
-/* GET home page. */
+/**
+ * @returns la page d'acceuil
+ */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });

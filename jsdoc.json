@@ -1,0 +1,11 @@
+{
+    "source":{
+        "include": ["public","routes"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|out)"
+    },
+    "opt":{
+        "recurse": true,
+        "destination": "./out/"
+    }
+}

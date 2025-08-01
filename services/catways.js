@@ -1,6 +1,17 @@
 const Catway = require('../models/catway');
 
-//ajout d'un catway
+//
+/**
+ * ajout d'un catway
+ *
+ * @async
+ * @function add
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient les info du catway
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos du catway crée, en cas d'échec renvoie une érreur.
+ */
 exports.add = async (req, res, next) =>{
 
     const temp = {
@@ -17,10 +28,20 @@ exports.add = async (req, res, next) =>{
         }
 }
 
-//recuperer la list de tout les catways
+//
+/**
+ * recuperer la list de tout les catways
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos des catways, en cas d'échec renvoie une érreur.
+ */
 exports.ListCatways = async(req, res, next) =>{
     try {
-        let catways = await Catway.find(); //j'ai du louper le passage du cours qui explique comment return tout les elements d'une collection, j'ai utiliser https://www.w3schools.com/mongodb/mongodb_mongosh_find.php pour trouver la fonction
+        let catways = await Catway.find(); // fonction trouvée sur https://www.w3schools.com/mongodb/mongodb_mongosh_find.php comme toute les autres fonction mongo hors du cour
 
         return res.status(200).json(catways);
     } catch (error) {
@@ -28,7 +49,18 @@ exports.ListCatways = async(req, res, next) =>{
     }
 }
 
-//recupere un catway en particulier via son numéro
+//
+/**
+ * recupere un catway en particulier via son numéro
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos du catway récuperer via son numéro, en cas d'échec renvoie une érreur.
+ */
 exports.getByNumber = async (req, res, next) => {
     const id= req.params.id;
 
@@ -45,7 +77,19 @@ exports.getByNumber = async (req, res, next) => {
     }
 };
 
-//modifie un catway
+//
+/**
+ * modifie un catway
+ *
+ * @async
+ * @function update
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient le numéro du catway a modifier ainsie que les nouvelle valeurs à lui attribuer
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie le JSON du catway récuperer via l'id avec les valeurs modifier en utilisant celle donnée dans le corp de la requete, en cas d'échec renvoie une érreur.
+ */
 exports.update = async (req, res, next) => {
     const id= req.params.id;
 
@@ -74,7 +118,18 @@ exports.update = async (req, res, next) => {
     }
 };
 
-//supprime un catway
+//
+/**
+ * supprime un catway
+ *
+ * @async
+ * @function delete
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un status qui confirm la suppréssion du catway, en cas d'échec renvoie une érreur.
+ */
 exports.delete = async (req, res, next) => {
     const id= req.params.id;
 

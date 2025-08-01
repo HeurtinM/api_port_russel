@@ -1,4 +1,11 @@
-//récupère un catway via son ID et affiche son type et son état
+/**
+ * récupère un catway via son ID et affiche son type et son état
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('catwayForm').addEventListener('submit', async (event)=> {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
@@ -19,7 +26,14 @@ document.getElementById('catwayForm').addEventListener('submit', async (event)=>
     catwayDisplay.appendChild(catwayState);
 });
 
-//simple fonction pour mettre les catways dans l'ordre
+
+/**
+ * simple fonction pour trier les catways dans l'ordre croissant de leur numéro
+ * 
+ * @param {catway} a premier catway dont on recupère le num
+ * @param {catway} b deuxieme catway dont on recupère le num
+ * @returns le plus petit en premier. fonction faite pour ètre utiliser avec sort()
+ */
 function compare( a, b ) {
     if ( a.catwayNumber < b.catwayNumber ){
         return -1;
@@ -30,7 +44,15 @@ function compare( a, b ) {
         return 0;
 }
 
-//affiche la liste de tout les catway dans un tableau avec leur ID,type et état
+//
+/**
+ * affiche la liste de tout les catway dans un tableau avec leur ID,type et état
+ * 
+ * @param {Event} event click sur le bouton "afficher la liste"
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('listCatways').addEventListener('click', async ()=> { 
      try {
         let result = await fetch('http://localhost:3000/catways/');
@@ -68,7 +90,15 @@ document.getElementById('listCatways').addEventListener('click', async ()=> {
 // quasiment tout les forums ou autre dans lesquel j'ai fait mes recherches disait juste que PUT et DELETE ne sont pas integrer en HTML sans donner de ressources pour countourner ce problème
 //au final j'ai utiliser ce post: https://stackoverflow.com/questions/75070365/using-fetch-to-change-form-method-to-delete comme base et j'ai du utiliser Le Chat Mistral pour complementer (seul fois ou l'IA a été nescessaire pour m'eclairer)
 
-//update le catway choisi avec les nouvelles infos donner dans le form
+//
+/**
+ * update le catway choisi avec les nouvelles infos donner dans le form
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('updateCatwayForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -97,7 +127,15 @@ document.getElementById('updateCatwayForm').addEventListener('submit', async (ev
     }
 });
 
-//supprime le catway choisi 
+//
+/**
+ * supprime le catway choisi 
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('deleteCatwayForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -124,9 +162,15 @@ document.getElementById('deleteCatwayForm').addEventListener('submit', async (ev
 
 //la meme fonction que pour l'option list mais pour remplir le dropdown select de l'option de suppréssion. 
 //J'ai pensé que je pourrais faire une seul fonction pour les deux mais je veux conserver le fait que la liste ne s'affiche qu'après que l'utilisateur est cliquer sur le bouton, tandis que le dropdown doit ètre lancer au chargement de la page
+/** 
+ * Remplit les menus déroulants avec la liste des catways existants.
+ * Les catways sont triés par numéro dans l'ordre croissant.
+ *
+ * @async
+ * @returns void, ne return rien dans le code
+  */
 async function listCatwaysForDropDown() {
     try {
-        console.log('started');
         let result = await fetch('http://localhost:3000/catways/');
         let catways = await result.json();
         let dropdownConsult = document.getElementById('catwayToConsult');

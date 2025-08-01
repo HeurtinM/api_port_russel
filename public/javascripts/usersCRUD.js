@@ -1,5 +1,13 @@
-//affiche un utilisateur via l'email, la seul information afficher est son nom 
-// donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
+//
+/**
+ * affiche un utilisateur via l'email, la seul information afficher est son nom 
+ * donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('userForm').addEventListener('submit', async (event) => {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
@@ -16,7 +24,13 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
     userDisplay.appendChild(userName);
 });
 
-//simple fonction pour mettre les utilisateurs dans l'ordre alphabetique de leur email
+//
+/** 
+ * simple fonction pour mettre les utilisateurs dans l'ordre alphabetique de leur email
+ * 
+ * @param {catway} a premier utilisateur dont on recupère l'email
+ * @param {catway} b deuxieme utilisateur dont on recupère l'email
+ * @returns l'ordre alphabetique. fonction faite pour ètre utiliser avec sort() */
 function compare( a, b ) {
     if ( a.email < b.email ){
         return -1;
@@ -27,7 +41,15 @@ function compare( a, b ) {
         return 0;
 }
 
-//liste tout les utilisateur,affiche leur nom d'utilisateur et email
+//
+/**
+ * liste tout les utilisateur,affiche leur nom d'utilisateur et email
+ * 
+ * @param {Event} event click du bouton pour afficher la liste
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('listUsers').addEventListener('click', async () => { 
     try {
         let result = await fetch('http://localhost:3000/users/');
@@ -57,7 +79,15 @@ document.getElementById('listUsers').addEventListener('click', async () => {
     }
 });
 
-//update un utilisteur avec les infos du form
+//
+/**
+ * update un utilisteur avec les infos du form
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('updateUserForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -90,7 +120,15 @@ document.getElementById('updateUserForm').addEventListener('submit', async (even
     listUsersForDropDown()
 });
 
-//supprime l'utilisateur choisi
+//
+/**
+ * supprime l'utilisateur choisi
+ * 
+ * @param {Event} event submit du form
+ * @listens l'event ci dessus
+ * @async
+ * @returns void, ne return rien dans le code
+ */
 document.getElementById('deleteUserForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -118,7 +156,6 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
 //fonction pour peupler les dropdowns
 async function listUsersForDropDown() {
     try {
-        console.log('started');
         let result = await fetch('http://localhost:3000/users/');
         let users = await result.json();
         let dropdownConsult = document.getElementById('userToConsult');

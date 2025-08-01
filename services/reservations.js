@@ -1,9 +1,20 @@
 const Reservation = require('../models/reservation');
 const Catway = require('../models/catway'); //import pour verifier que l'id est celle d'un catway existent
-const reservation = require('../models/reservation');
 
 
-//ajout d'une reservation
+//
+/**
+ * ajout d'une reservation
+ *
+ * @async
+ * @function add
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient les info de la reservation
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos de la reservation crée, en cas d'échec renvoie une érreur.
+ */
 exports.add = async (req, res, next) =>{
     const id = req.params.id;
 
@@ -51,7 +62,17 @@ exports.add = async (req, res, next) =>{
         }
 }
 
-//list toute les reservations
+//
+/**
+ * list toute les reservations
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos des reservations, en cas d'échec renvoie une érreur.
+ */
 exports.ListReservation = async(req, res, next) =>{
     try {
         let reservation = await Reservation.find(); 
@@ -74,7 +95,18 @@ exports.ListReservation = async(req, res, next) =>{
     // }
 }
 
-//recuperer une reservation via son id
+//
+/**
+ * recuperer une reservation via son id
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos du catway récupérer via son id, en cas d'échec renvoie une érreur.
+ */
 exports.getById = async (req, res, next) => {
     const id= req.params.idReservation;
 
@@ -91,7 +123,19 @@ exports.getById = async (req, res, next) => {
     }
 };
 
-//modifie une reservation
+//
+/**
+ * modifie une reservation
+ *
+ * @async
+ * @function update
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient le numéro de la reservation a modifier ainsie que les nouvelle valeurs à lui attribuer
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie le JSON de la reservation récuperer via l'id avec les valeurs modifier en utilisant celle donnée dans le corp de la requete, en cas d'échec renvoie une érreur.
+ */
 exports.update = async (req, res, next) => {
     const id= req.params.idReservation;
 
@@ -122,6 +166,17 @@ exports.update = async (req, res, next) => {
     }
 };
 
+/**
+ * supprime un catway
+ *
+ * @async
+ * @function delete
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} id recupère l'id présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un status qui confirm la suppréssion de la reservation, en cas d'échec renvoie une érreur.
+ */
 exports.delete = async (req, res, next) => {
     const id= req.params.idReservation;
 

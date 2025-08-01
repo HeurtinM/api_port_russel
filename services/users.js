@@ -2,10 +2,19 @@ const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-//recuperer la liste des utilisateurs
+/**
+ * recuperer la list de tout les utilisateurs
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos des utilisateurs, en cas d'échec renvoie une érreur.
+ */
 exports.ListUsers = async(req, res, next) =>{
     try {
-        let users = await User.find(); //j'ai du louper le passage du cours qui explique comment return tout les elements d'une collection, j'ai utiliser https://www.w3schools.com/mongodb/mongodb_mongosh_find.php pour trouver la fonction
+        let users = await User.find();
 
         return res.status(200).json(users);
     } catch (error) {
@@ -13,7 +22,18 @@ exports.ListUsers = async(req, res, next) =>{
     }
 }
 
-//recuperer utilisateur en utilisant l'email au lieu de l'id (comme le cours le fait) afin de correspondre a la route demander par le brief de mission
+//
+/**
+ * recuperer utilisateur en utilisant l'email au lieu de l'id (comme le cours le fait) afin de correspondre a la route demander par le brief de mission
+ *
+ * @async
+ * @function exports
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} email recupère l'email présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos de l'utilisateur récupérer via son email, en cas d'échec renvoie une érreur.
+ */
 exports.getByEmail = async (req, res, next) => {
     const email = req.params.email;
 
@@ -30,16 +50,18 @@ exports.getByEmail = async (req, res, next) => {
     }
 };
 
-//ajouter utilisateur
+/**
+ * ajout d'un utilisateur
+ *
+ * @async
+ * @function add
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient les info de l'utilisateur
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un JSON avec les infos de l'utilisateur crée, en cas d'échec renvoie une érreur.
+ */
 exports.add = async (req, res, next) => {
-    console.log("user add");
-    const emailToCheck = req.body.email;
-
-    //ma tentative de reparer le manque de verification des "user input" comme indiquer dans le cour, j'ai utilisé cette ressource: https://www.w3resource.com/javascript/form/email-validation.php
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailToCheck)) {
-        return res.status(400).json({ error: 'format email invalide' });
-    }
-
     const temp = {
         userName: req.body.userName,
         email: req.body.email,
@@ -54,7 +76,19 @@ exports.add = async (req, res, next) => {
     }
 };
 
-//modifier utilisiateur, idem que pour recuperer, j'utilise l'email au lieu de l'id comme demande les routes du brief
+//
+/**
+ * modifier utilisiateur, idem que pour recuperer, j'utilise l'email au lieu de l'id comme demande les routes du brief
+ *
+ * @async
+ * @function update
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} req.body Le corps de la requete, contient l'email de l'utilisateura modifier ainsie que les nouvelle valeurs à lui attribuer
+ * @param {Object} email recupère l'email présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie le JSON de l'utilisateur récuperer via l'email avec les valeurs modifier en utilisant celle donnée dans le corp de la requete, en cas d'échec renvoie une érreur.
+ */
 exports.update = async (req, res, next) => {
     const email = req.params.email;
     const temp = {
@@ -83,7 +117,18 @@ exports.update = async (req, res, next) => {
     }
 };
 
-//supprimer utilisateur, toujours pareille, email au lieu d'id
+//
+/**
+ * supprimer utilisateur, toujours pareil, email au lieu d'id
+ *
+ * @async
+ * @function delete
+ * @param {Object} req objet demandé par la requete
+ * @param {Object} email recupère l'email présent dans le corp de la requete 
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie un status qui confirm la suppréssion de l'utilisateur, en cas d'échec renvoie une érreur.
+ */
 exports.delete = async (req, res, next) => {
     const email = req.params.email;
 
@@ -95,7 +140,18 @@ exports.delete = async (req, res, next) => {
     }
 }
 
-
+/**
+ * Authentifie un utilisateur en vérifiant ses informations et crée un token JWT.
+ *
+ * @async
+ * @function login
+ * @param {Object} req objet demandé par la requete
+ * @param {string} email recupère l'email présent dans le corp de la requete 
+ * @param {string} req.body.password le mot de passe de l'utilisateur.
+ * @param {Object} res L'objet envoyé en réponse
+ * @param {Function} next appel la fonction middleware suivante
+ * @returns {Object} renvoie une redirection vers le tableau de bord en cas de succès, en cas d'échec renvoie une érreur.
+ */
 exports.login = async (req, res, next) => {
     const {email, password} = req.body;
 
