@@ -10,18 +10,30 @@
 document.getElementById('reservationForm').addEventListener('submit', async (event) => {
     event.preventDefault(); // block le formulaire pour ne pas recharger la page
 
-    let catwayID = document.getElementById('reservationToConsultCatway')
+    let catwayID = document.getElementById('reservationToConsultCatway').value;
     let ID = document.getElementById('reservationToConsult').value;
 
     let result = await fetch("http://localhost:3000/catways/" + catwayID + "/reservations/" + ID);
-    let reservationJson = await result.json();
+    let reservation = await result.json();
     let reservationDisplay = document.getElementById("reservationDisplay");
 
     reservationDisplay.innerHTML = ''; //vide le display avant d'afficher un nouvelle utilisateur
 
-    let reservationName = document.createElement('p');
-    reservationName.textContent = reservationJson.reservationName;
-    reservationDisplay.appendChild(reservationName);
+    let reservationClientName = document.createElement('p');
+    reservationClientName.textContent = reservation.clientName;
+    reservationDisplay.appendChild(reservationClientName);
+
+    let reservationBoatName = document.createElement('p');
+    reservationBoatName.textContent = reservation.boatName;
+    reservationDisplay.appendChild(reservationBoatName);
+
+    let reservationStartDate = document.createElement('p');
+    reservationStartDate.textContent = new Date(reservation.startDate).toLocaleString();
+    reservationDisplay.appendChild(reservationStartDate);
+
+    let reservationEndDate = document.createElement('p');
+    reservationEndDate.textContent = new Date(reservation.endDate).toLocaleString();
+    reservationDisplay.appendChild(reservationEndDate);
 });
 
 //

@@ -1,20 +1,30 @@
-//script crée en suivant ce tutoriel: https://www.youtube.com/watch?v=7LGpIQ6ceJs
-const form = document.querySelector('form');
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
 
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
+    try {
+        const response = await fetch('http://localhost:3000/users/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
 
-/**
- * récupère et store les infos de l'utilisateur lors de la connection
- * 
- * @listens submit du form
- * @returns void, ne return rien dans le code
- */
-form.addEventListener('submit',()=>{
-    const data = new FormData(form);
-    const object = Object.fromEntries(data);
+        const data = await response.json();
 
-   const json = JSON.stringify(object);
-   localStorage.setItem('form',json);
+        if (response.ok) {
+            // Stocker le token dans localStorage
+            localStorage.setItem('token', data.token);
+            // Rediriger vers le tableau de bord
+            window.location.href = data.redirect;
+        } else {
+            alert(data.message || 'Échec de la connexion');
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+});
 
-    console.log('Données stockées dans localStorage :', json);
-})

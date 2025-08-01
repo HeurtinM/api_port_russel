@@ -175,10 +175,9 @@ exports.login = async (req, res, next) => {
                         expiresIn: expireIn
                     });
 
-                res.header('Authorization','Bearer'+token);
+                res.header('Authorization','Bearer '+token);
                 
-
-                return res.redirect("/dashboard.html"); //fonction response redirect prise ici: https://expressjs.com/en/api.html#res.redirect
+                return res.status(200).json({ token: token, redirect: "/dashboard.html" });
                 }
 
                 return res.status(403).json({ success: false, message: "Email ou mot de passe incorrect" });

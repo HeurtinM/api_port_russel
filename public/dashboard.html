@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -38,6 +39,9 @@
       const userInfoSpan = document.getElementById('userInfo');
       userInfoSpan.textContent = `${object.userName} - ${object.email}`;
     }
+
+    const token = localStorage.getItem('token');
+    console.log('Token stocké dans localStorage:', token);
   </script>
   <script src="/javascripts/getCurrentDate.js"></script>
   <script src="/javascripts/displayReservations.js"></script>

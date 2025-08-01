@@ -1,4 +1,37 @@
-//
+//trouver comment gerer le Token a probablement été la partie la plus difficile du devoir car le cours sur JWT ne couvre pas aussi loins. j'ai trouver les soltion en utilisant de nombreux forums, tuto sur YT et avec une discussion avec un chatBot (bien que ce dernier ne fut pas super utile, je devais mal expliquer les problèmes ?)
+//récupérer le token
+function getAuthToken() {
+    return localStorage.getItem('token'); // Assurez-vous que le token est stocké ici après la connexion
+}
+
+//ajoute le token aux en-têtes
+function getHeaders() {
+    const token = getAuthToken();
+    if (!token) {
+        console.error('Token not found in localStorage');
+        return {
+            'Content-Type': 'application/json'
+        };
+    }
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    };
+}
+
+
+// Vérifiez le token au chargement de la page
+document.addEventListener('DOMContentLoaded', () => {
+    const token = getAuthToken();
+    console.log('Token:', token);
+    if (!token) {
+        alert('Vous devez être connecté pour accéder à cette page.');
+        window.location.href = '/';
+    } else {
+        listUsersForDropDown();
+    }
+});
+
 /**
  * affiche un utilisateur via l'email, la seul information afficher est son nom 
  * donc la fonction est peu utile tel quel, mais elle peut ètre facilement modifier pour afficher tout autres infos qui pourrait ètre rajoutées dans le model user
@@ -13,7 +46,9 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
 
     let email = document.getElementById('userToConsult').value;
 
-    let result = await fetch("http://localhost:3000/users/" + email);
+    let result = await fetch("http://localhost:3000/users/" + email, {
+        headers: getHeaders()
+    });
     let userJson = await result.json();
     let userDisplay = document.getElementById("userDisplay");
 
@@ -52,11 +87,13 @@ function compare( a, b ) {
  */
 document.getElementById('listUsers').addEventListener('click', async () => { 
     try {
-        let result = await fetch('http://localhost:3000/users/');
+        let result = await fetch('http://localhost:3000/users/',{
+            headers: getHeaders()
+        });
         let users = await result.json();
         let tableBody = document.querySelector('#usersTable tbody');
 
-                users.sort( compare );
+                //users.sort( compare );
 
                 tableBody.innerHTML = '';
 
@@ -100,9 +137,7 @@ document.getElementById('updateUserForm').addEventListener('submit', async (even
     try {
         const response = await fetch(`http://localhost:3000/users/${userToUpdateEmail}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: getHeaders(),
             body: JSON.stringify({ userName, email, password}),
         });
 
@@ -138,6 +173,7 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
     try {
         const response = await fetch(`http://localhost:3000/users/${userEmail}`, {
             method: 'DELETE',
+            headers: getHeaders(),
         });
 
         if (response.ok) {
@@ -156,13 +192,17 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
 //fonction pour peupler les dropdowns
 async function listUsersForDropDown() {
     try {
-        let result = await fetch('http://localhost:3000/users/');
+        const headers = getHeaders();
+
+        let result = await fetch('http://localhost:3000/users/',{
+            headers: headers
+        });
         let users = await result.json();
         let dropdownConsult = document.getElementById('userToConsult');
         let dropdownDelete = document.getElementById('userToDelete');
         let dropdownUpdate = document.getElementById('userToUpdate');
 
-        users.sort( compare );
+        //users.sort( compare );
 
         dropdownConsult.innerHTML = '';
         dropdownDelete.innerHTML = '';
@@ -185,7 +225,3 @@ async function listUsersForDropDown() {
 }
 
 listUsersForDropDown()
-
-//todo
-//combiner les event listeners et fonctions
-//crud reservations
