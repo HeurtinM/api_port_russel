@@ -41,7 +41,7 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
 
     let email = document.getElementById('userToConsult').value;
 
-    let result = await fetch("api/users/" + email);
+    let result = await fetch("users/" + email);
     let userJson = await result.json();
     let userDisplay = document.getElementById("userDisplay");
 
@@ -80,7 +80,7 @@ function compare( a, b ) {
  */
 document.getElementById('listUsers').addEventListener('click', async () => { 
     try {
-        let result = await fetch('api/users/');
+        let result = await fetch('users/');
         let users = await result.json();
         let tableBody = document.querySelector('#usersTable tbody');
 
@@ -126,7 +126,7 @@ document.getElementById('updateUserForm').addEventListener('submit', async (even
     const password = document.getElementById('passwordToUpdate').value;
 
     try {
-        const response = await fetch(`api/users/${userToUpdateEmail}`, {
+        const response = await fetch(`users/${userToUpdateEmail}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
     const userEmail = dropdown.value;
 
     try {
-        const response = await fetch(`api/users/${userEmail}`, {
+        const response = await fetch(`users/${userEmail}`, {
             method: 'DELETE',
         });
 
@@ -184,7 +184,7 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
 //fonction pour peupler les dropdowns
 async function listUsersForDropDown() {
     try {
-        let result = await fetch('api/users/');
+        let result = await fetch('users/');
         let users = await result.json();
         let dropdownConsult = document.getElementById('userToConsult');
         let dropdownDelete = document.getElementById('userToDelete');

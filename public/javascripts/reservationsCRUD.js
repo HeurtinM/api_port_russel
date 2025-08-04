@@ -13,7 +13,7 @@ document.getElementById('reservationForm').addEventListener('submit', async (eve
     let catwayID = document.getElementById('reservationToConsultCatway').value;
     let ID = document.getElementById('reservationToConsult').value;
 
-    let result = await fetch("api/catways/" + catwayID + "/reservations/" + ID);
+    let result = await fetch("catways/" + catwayID + "/reservations/" + ID);
     let reservation = await result.json();
     let reservationDisplay = document.getElementById("reservationDisplay");
 
@@ -47,10 +47,10 @@ document.getElementById('reservationForm').addEventListener('submit', async (eve
  */
 document.getElementById('listReservations').addEventListener('click', async () => { 
     try {
-        let catwaysResult = await fetch('api/catways/');
+        let catwaysResult = await fetch('catways/');
         let catways = await catwaysResult.json();
 
-        let result = await fetch(`api/catways/${catways[0].catwayNumber}/reservations/`); //utilise le numero du premier catway enregistrer pour accedder a la route.De cette manière tant qu'il reste au moins un catway, la fonction fonctionnera toujours
+        let result = await fetch(`catways/${catways[0].catwayNumber}/reservations/`); //utilise le numero du premier catway enregistrer pour accedder a la route.De cette manière tant qu'il reste au moins un catway, la fonction fonctionnera toujours
         let reservations = await result.json();
         let tableBody = document.querySelector('#reservationsTable tbody');
 
@@ -102,7 +102,7 @@ document.getElementById('listReservations').addEventListener('click', async () =
  */
 document.getElementById('catwayNumberForReservation').addEventListener('change', function() {
         let catwayID = this.value;
-        document.getElementById('addReservationForm').action = `api/catways/${catwayID}/reservations/`;
+        document.getElementById('addReservationForm').action = `catways/${catwayID}/reservations/`;
 });
 
 
@@ -127,7 +127,7 @@ document.getElementById('updateReservationForm').addEventListener('submit', asyn
     const endDate = document.getElementById('endDateToUpdate').value;
 
     try {
-        const response = await fetch(`api/catways/${reservationToUpdateCatway}/reservations/${reservationToUpdate}`, {
+        const response = await fetch(`catways/${reservationToUpdateCatway}/reservations/${reservationToUpdate}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ document.getElementById('deleteReservationForm').addEventListener('submit', asyn
     let reservationToDelete = document.getElementById('reservationToDelete').value;
 
     try {
-        const response = await fetch(`api/catways/${reservationToDeleteCatway}/reservations/${reservationToDelete}`, {
+        const response = await fetch(`catways/${reservationToDeleteCatway}/reservations/${reservationToDelete}`, {
             method: 'DELETE',
         });
 
@@ -201,7 +201,7 @@ function compare( a, b ) {
   */
 async function listCatwaysForDropDown() {
     try {
-        let result = await fetch('api/catways/');
+        let result = await fetch('catways/');
         let catways = await result.json();
         let dropdownAdd = document.getElementById('catwayNumberForReservation');
         let dropdownConsult = document.getElementById('reservationToConsultCatway');
@@ -263,7 +263,7 @@ document.getElementById("reservationToUpdateCatway").addEventListener('change', 
   */
 async function listIDForDropDown(catwayID, dropdownID) {
     try {
-        let result = await fetch(`api/catways/${catwayID}/reservations/`);
+        let result = await fetch(`catways/${catwayID}/reservations/`);
         let reservations = await result.json();
         let dropdown = document.getElementById(dropdownID);
 

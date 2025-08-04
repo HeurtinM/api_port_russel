@@ -46,7 +46,7 @@ document.getElementById('userForm').addEventListener('submit', async (event) => 
 
     let email = document.getElementById('userToConsult').value;
 
-    let result = await fetch("api/users/" + email, {
+    let result = await fetch("users/" + email, {
         headers: getHeaders()
     });
     let userJson = await result.json();
@@ -87,7 +87,7 @@ function compare( a, b ) {
  */
 document.getElementById('listUsers').addEventListener('click', async () => { 
     try {
-        let result = await fetch('api/users/',{
+        let result = await fetch('users/',{
             headers: getHeaders()
         });
         let users = await result.json();
@@ -135,7 +135,7 @@ document.getElementById('updateUserForm').addEventListener('submit', async (even
     const password = document.getElementById('passwordToUpdate').value;
 
     try {
-        const response = await fetch(`api/users/${userToUpdateEmail}`, {
+        const response = await fetch(`users/${userToUpdateEmail}`, {
             method: 'PUT',
             headers: getHeaders(),
             body: JSON.stringify({ userName, email, password}),
@@ -171,7 +171,7 @@ document.getElementById('deleteUserForm').addEventListener('submit', async (even
     const userEmail = dropdown.value;
 
     try {
-        const response = await fetch(`api/users/${userEmail}`, {
+        const response = await fetch(`users/${userEmail}`, {
             method: 'DELETE',
             headers: getHeaders(),
         });
@@ -194,7 +194,7 @@ async function listUsersForDropDown() {
     try {
         const headers = getHeaders();
 
-        let result = await fetch('api/users/',{
+        let result = await fetch('users/',{
             headers: headers
         });
         let users = await result.json();
