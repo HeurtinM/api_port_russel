@@ -7,7 +7,7 @@
  */
 async function getReservations() {
             try {
-                let result = await fetch('http://localhost:3000/catways/:id/reservations');
+                let result = await fetch('api/catways/:id/reservations');
                 let reservations = await result.json();
                 let tableBody = document.querySelector('#reservationsTable tbody');
 
