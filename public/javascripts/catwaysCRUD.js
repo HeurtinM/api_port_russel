@@ -11,7 +11,7 @@ document.getElementById('catwayForm').addEventListener('submit', async (event)=>
 
     let catwayID = document.getElementById('catwayToConsult').value;
 
-    let result = await fetch("https://api-port-russel-mu.vercel.appcatways/" + catwayID);
+    let result = await fetch("https://api-port-russel-je588cze7-heurtinms-projects.vercel.appcatways/" + catwayID);
     let catwayJson = await result.json();
     let catwayDisplay = document.getElementById("catwayDisplay");
 
@@ -55,7 +55,7 @@ function compare( a, b ) {
  */
 document.getElementById('listCatways').addEventListener('click', async ()=> { 
      try {
-        let result = await fetch('https://api-port-russel-mu.vercel.app/catways/');
+        let result = await fetch('https://api-port-russel-je588cze7-heurtinms-projects.vercel.app/catways/');
             let catways = await result.json();
                 let tableBody = document.querySelector('#catwaysTable tbody');
 
@@ -107,7 +107,7 @@ document.getElementById('updateCatwayForm').addEventListener('submit', async (ev
     const catwayType = document.querySelector('input[name="catwayUpdatedType"]:checked').value;
 
     try {
-        const response = await fetch(`https://api-port-russel-mu.vercel.app/catways/${catwayId}`, {
+        const response = await fetch(`https://api-port-russel-je588cze7-heurtinms-projects.vercel.app/catways/${catwayId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ document.getElementById('deleteCatwayForm').addEventListener('submit', async (ev
     const catwayId = dropdown.value;
 
     try {
-        const response = await fetch(`https://api-port-russel-mu.vercel.app/catways/${catwayId}`, {
+        const response = await fetch(`https://api-port-russel-je588cze7-heurtinms-projects.vercel.app/catways/${catwayId}`, {
             method: 'DELETE',
         });
 
@@ -171,7 +171,7 @@ document.getElementById('deleteCatwayForm').addEventListener('submit', async (ev
   */
 async function listCatwaysForDropDown() {
     try {
-        let result = await fetch('https://api-port-russel-mu.vercel.app/catways/');
+        let result = await fetch('https://api-port-russel-je588cze7-heurtinms-projects.vercel.app/catways/');
         let catways = await result.json();
         let dropdownConsult = document.getElementById('catwayToConsult');
         let dropdownDelete = document.getElementById('catwayToDelete');
