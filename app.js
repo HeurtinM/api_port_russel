@@ -13,7 +13,8 @@ var app = express();
 
 app.use(cors({
     exposedHeaders: ['Authorization'],
-    origin: '*'
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 app.use(logger('dev'));
