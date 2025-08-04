@@ -55,7 +55,7 @@ function compare( a, b ) {
  */
 document.getElementById('listCatways').addEventListener('click', async ()=> { 
      try {
-        let result = await fetch('https://api-port-russel-mu.vercel.appcatways/');
+        let result = await fetch('https://api-port-russel-mu.vercel.app/catways/');
             let catways = await result.json();
                 let tableBody = document.querySelector('#catwaysTable tbody');
 
