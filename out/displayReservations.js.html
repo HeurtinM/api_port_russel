@@ -35,7 +35,7 @@
  */
 async function getReservations() {
             try {
-                let result = await fetch('https://api-port-russel-mu.vercel.app//catways/:id/reservations');
+                let result = await fetch('https://api-port-russel-mu.vercel.app/catways/:id/reservations');
                 let reservations = await result.json();
                 let tableBody = document.querySelector('#reservationsTable tbody');
 
