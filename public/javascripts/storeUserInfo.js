@@ -1,10 +1,12 @@
 document.getElementById('loginForm').addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    const userName = document.getElementById('userName').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     try {
+        console.log("try ok");
         const response = await fetch('users/login', {
             method: 'POST',
             headers: {
@@ -16,12 +18,14 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
         const data = await response.json();
 
         if (response.ok) {
-            // Stocker le token dans localStorage
+            console.log("response ok");
             localStorage.setItem('token', data.token);
-            // Rediriger vers le tableau de bord
+            localStorage.setItem('form', JSON.stringify({ userName, email }))
             window.location.href = data.redirect;
         } else {
-            alert(data.message || 'Échec de la connexion');
+            const errorMessage = `Échec de la connexion: ${response.status} ${response.statusText}\n${JSON.stringify(data)}`;
+            alert(errorMessage);
+            console.error('Détails de l\'erreur:', errorMessage);
         }
     } catch (error) {
         console.error('Erreur:', error);

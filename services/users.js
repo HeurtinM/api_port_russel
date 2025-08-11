@@ -185,7 +185,7 @@ exports.login = async (req, res, next) => {
             
         }
         else{
-           return res.status(404).json('utilisateur inconnue')
+           return res.status(404).json('utilisateur inconnu')
         }     
     } catch (error) {
         return res.status(501).json(error);

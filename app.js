@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index.js');
 var mongodb = require('./db/mongo');
 
 mongodb.initClientDBConnection();
@@ -16,6 +16,8 @@ app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
